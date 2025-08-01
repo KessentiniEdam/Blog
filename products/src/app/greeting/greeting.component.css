@@ -1,0 +1,12 @@
+.page-title {
+  text-align: center;
+  font-size: 3rem;
+  color: #f0f0f0;
+  margin-top: 40px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(90deg, #93240e, #057122);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
