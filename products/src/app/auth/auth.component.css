@@ -1,0 +1,81 @@
+.auth-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent; /* light green */
+  opacity: 0.9;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', sans-serif;
+
+}
+
+.left-panel {
+  background-color: #e63926; /* red */
+  color: white;
+  padding: 60px;
+  width: 400px;
+  height: 400px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.left-panel h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.left-panel p {
+  margin-bottom: 20px;
+}
+
+.login-button {
+  padding: 10px 30px;
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.right-panel {
+  background-color: white;
+  padding: 60px;
+  width: 400px;
+  height: 400px;
+  box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.right-panel h2 {
+  font-size: 28px;
+  margin-bottom: 30px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.register-button {
+  padding: 12px;
+  background-color: #444;
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}

@@ -1,17 +1,14 @@
+<h1>List of Articles</h1>
 
-
-
-<h1> List of Articles</h1>
-@for (Article of Articles; track Article.title; let i = $index) {
+<div *ngFor="let Article of Articles; let i = index; trackBy: trackByTitle">
   <div class="Article" appHideOnHover [ngStyle]="{ backgroundColor: '#786B4C' }">
     <h3>{{ Article.title | titlecase }}</h3>
-        <p>Date: {{ Article.addedDate | date: 'shortDate' }}</p>
-
+    <p>Date: {{ Article.addedDate | date: 'shortDate' }}</p>
     <p>Body: {{ Article.body }}</p>
-    <!-- <p>User ID: {{ Article.userId }}</p> -->
-    <!-- <p>id:{{Article.id}}</p> -->
-    <button (click)="removeArticle(i)">Remove</button>
-<button *ngIf="Article.id !== undefined" (click)="updateArticle(i)">Update</button>
+    <p>Author: {{ getUsername(Article.userId) }}</p>
+
+    <!-- Author-only actions -->
+    <button *ngIf="checkPrivileges(Article)" (click)="removeArticle(i)">Remove</button>
+    <button *ngIf="checkPrivileges(Article)" (click)="updateArticle(i)">Update</button>
   </div>
-}
 

@@ -21,7 +21,8 @@
 body {
   margin: 0; /* Remove default body margin */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333; /* Default text color */
+  font-size: large;
+  color: #112; /* Default text color */
   min-height: 100vh; /* Ensure body takes full viewport height */
   position: relative; /* Needed for pseudo-element positioning */
    display: flex;
@@ -47,12 +48,14 @@ body::before {
   background: linear-gradient(to right, #1a1a1a, #333);
   padding: 15px;
   position: fixed;
+  display:flex;
+  justify-content: space-between;
   top: 0;
   width: 100%;
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
-.navbar nav a {
+.navbar .left a {
   color: #f0f0f0;
   margin: 0 20px;
   text-decoration: none;
@@ -62,16 +65,11 @@ body::before {
   transition: color 0.3s;
 }
 
-.navbar nav a:hover,
-.navbar nav a.active {
+.navbar .left a:hover,
+.navbar .left a.active {
   color: #f54927;
 }
-.header-nav {
-  
-  display: flex;
-  justify-content:space-between;
-  gap: 20px;
-}
+
 .nav-button {
   margin-right: 2rem;
   background-color: #2f0d07;
@@ -82,6 +80,18 @@ body::before {
   cursor: pointer;
 
 }
+.logout{
+  margin-right: 2rem;
+  background-color: #a9402e;
+  color: white;
+  border: none;
+  font-weight: bold;
+  border-radius: 60%;
+  height: 50px;
+  width: 70px;
+  cursor: pointer;
+
+}
 
 app-root {
   display: flex;
@@ -89,8 +99,38 @@ app-root {
   min-height: 100vh;
   flex: 1;
 }
+.right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.user-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.welcome-msg {
+  margin-right: 16px;
+  vertical-align: middle;
+  font-weight: 500;
+}
+
+
+.logout {
+  background-color: #f54927;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 
 main {
   flex: 1; /* Pushes footer to bottom */
   padding: 20px;
 }
+

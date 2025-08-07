@@ -1,0 +1,29 @@
+<div class="auth-container">
+  <div class="left-panel">
+    <h2>{{ isRegisterMode ? 'Have an account?' : 'New here?' }}</h2>
+    <p>{{ isRegisterMode ? 'Welcome back!' : 'Create your account' }}</p>
+    <button class="login-button" (click)="toggleMode()">
+      {{ isRegisterMode ? 'Login' : 'Register' }}
+    </button>
+  </div>
+
+  <div class="right-panel">
+    <h2>{{ isRegisterMode ? 'REGISTER' : 'LOGIN' }}</h2>
+
+    <!-- REGISTER FORM -->
+    <form *ngIf="isRegisterMode" [formGroup]="registerForm" (ngSubmit)="onRegister()">
+      <input type="text" formControlName="username" placeholder="Username" />
+      <input type="email" formControlName="email" placeholder="Email" />
+      <input type="password" formControlName="password" placeholder="Password" />
+      <input type="password" formControlName="confirmPassword" placeholder="Confirm Password" />
+      <button type="submit" class="register-button">REGISTER</button>
+    </form>
+
+    <!-- LOGIN FORM -->
+    <form *ngIf="!isRegisterMode" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <input type="text" formControlName="username" placeholder="Username" />
+      <input type="password" formControlName="password" placeholder="Password" />
+      <button type="submit" class="register-button">LOGIN</button>
+    </form>
+  </div>
+</div>

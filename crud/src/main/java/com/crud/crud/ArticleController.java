@@ -1,9 +1,10 @@
 package com.crud.crud;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
-@RequestMapping("/api/Articles")
+@RequestMapping({"/api/Articles", "/api/Articles/"})
 @CrossOrigin(origins = "*") // Allow requests from Angular
 public class ArticleController {
     private final ArticleRepository repo;
@@ -12,10 +13,12 @@ public class ArticleController {
         this.repo = repo;
     }
     @GetMapping("/{id}")
-    public Article getArticle(@PathVariable Long id) {
+    public ResponseEntity<Article> getArticle(@PathVariable Long id) {
         return repo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Article not found"));
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
+
 
     @GetMapping
     public List<Article> getAll() {

@@ -17,7 +17,7 @@ public class Article {
     @Lob
     @Column(columnDefinition = "TEXT") // 👈 tells PostgreSQL to use proper text type
     private String body;
-    private String userId;
+    private Long userId;
     private LocalDate addedDate;
 
     // Getters & Setters

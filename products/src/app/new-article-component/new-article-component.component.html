@@ -6,8 +6,7 @@
     <input style="width: 200px;" type="text" [(ngModel)]="newArticle.title" name="ArticleTitle">
     <label for="ArticleBody">Body</label>
     <textarea style="width: 200px;" [(ngModel)]="newArticle.body" name="ArticleBody" required></textarea>
-    <label for="ArticleUserId">User ID</label>
-    <input style="width: 200px;" type="text" [(ngModel)]="newArticle.userId" name="ArticleUserId">
+    <input type="hidden" [(ngModel)]="newArticle.userId" name="ArticleUserId">
   </div>
   <button (click)="addArticle()">Add Article</button>
 </form>

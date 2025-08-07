@@ -1,17 +1,31 @@
-<header class="navbar">
-  <nav class="header-nav">
-     <a routerLink="/articles" routerLinkActive="active">Articles List</a>
-    <button class="nav-button">   
-        <a routerLink="/new" routerLinkActive="active">New Article</a>
-    </button>
-  </nav>
-</header>
+<!-- app.component.html -->
+<ng-container *ngIf="isLoggedIn() && !isAuthRoute()">
+  <header class="navbar">
+    
+    <div class="left">
 
-<!-- <app-greeting></app-greeting> -->
- <div style="height: 150px"></div>
- <main>
-<router-outlet></router-outlet>
+      <a routerLink="/articles" routerLinkActive="active">Articles List</a>
+      <button class="nav-button">
+        <a routerLink="/new" routerLinkActive="active">New Article</a>
+      </button>
+    </div>
+    <div class="right">
+          <img src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt="User Icon" class="user-icon" />
+    <span class="welcome-msg">Welcome, {{ getUsername() }}</span>
+
+      <button class="logout" (click)="logout()">logout</button>
+    </div>
+  </header>
+</ng-container>
+
+<div style="height: 150px"></div>
+
+<main>
+  <router-outlet></router-outlet>
 </main>
-<footer class="app-footer">
-  <div class="footer-text">Thank you for your contribution</div>
-</footer>
+
+<ng-container *ngIf="isLoggedIn() && !isAuthRoute()">
+  <footer class="app-footer">
+    <div class="footer-text">Thank you for your contribution</div>
+  </footer>
+</ng-container>
