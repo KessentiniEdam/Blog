@@ -6,14 +6,18 @@ import com.crud.crud.User.model.User;
 import com.crud.crud.User.service.JwtService;
 import com.crud.crud.User.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
+@CrossOrigin(origins = "*") // Allow requests from Angular
+
 @RequestMapping("/api/auth")
 public class AuthController {
 
@@ -36,12 +40,30 @@ public class AuthController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
             User user = userService.getUserByUsername(request.getUsername());
-            String token = jwtService.generateToken(user);
-            return ResponseEntity.ok(new AuthResponse(token));
+            String accessToken = jwtService.generateAccessToken(user);
+            String refreshToken = jwtService.generateRefreshToken(user);
+            return ResponseEntity.ok(new AuthResponse(refreshToken, accessToken));
+
+
+            //
+
+
         }
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody User user) {
         userService.register(user);
         return ResponseEntity.ok("User registered successfully");
+    }
+    @PostMapping("/refresh-token")
+    public ResponseEntity<Map<String, String>> refreshToken(@RequestBody String refreshToken) {
+        // Validate refresh token, issue new tokens if valid
+        if (jwtService.isTokenValid(refreshToken)) {
+            String username = jwtService.extractUsername(refreshToken);
+            User user = userService.getUserByUsername(username);
+            String newAccessToken = jwtService.generateAccessToken(user);
+            return ResponseEntity.ok(Map.of("accessToken", newAccessToken));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 }

@@ -10,15 +10,17 @@ import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
-
 @Service
 public class JwtService {
 
     @Value("${jwt.secret}")
     private String secret;
 
-    @Value("${jwt.expiration}")
-    private long expiration;
+    @Value("${jwt.access.expiration}")
+    private long accessExpiration;
+
+    @Value("${jwt.refresh.expiration}")
+    private long refreshExpiration;
 
     private Key getSignKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());
@@ -26,38 +28,54 @@ public class JwtService {
 
     public String extractUsername(String token) {
         return Jwts.parser()
-
                 .setSigningKey(getSignKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
     }
-
-    public boolean isTokenValid(String token, String username) {
-        final String extractedUsername = extractUsername(token);
-        return extractedUsername.equals(username) && !isTokenExpired(token);
-    }
-
-    private boolean isTokenExpired(String token) {
-        Date expiration = Jwts.parser()
+    public Long extractUserId(String token) {
+        return ((Number) Jwts.parser()
                 .setSigningKey(getSignKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
-                .getExpiration();
-        return expiration.before(new Date());
+                .get("id")) // The claim name you set when generating the token
+                .longValue();
     }
 
-    public String generateToken(User user) {
+
+
+
+    public boolean isTokenValid(String token) {
+        try {
+            Jws<Claims> claims = Jwts.parser()
+                    .setSigningKey(getSignKey())
+                    .build()
+                    .parseClaimsJws(token);
+
+            Date expiration = claims.getBody().getExpiration();
+            return expiration.after(new Date());
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    public String generateAccessToken(User user) {
+        return generateToken(user, accessExpiration);
+    }
+
+    public String generateRefreshToken(User user) {
+        return generateToken(user, refreshExpiration);
+    }
+
+    private String generateToken(User user, long expirationMillis) {
         return Jwts.builder()
                 .setSubject(user.getUsername())
-                .claim("id", user.getId()) // 👈 Add user ID as custom claim
+                .claim("id", user.getId())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .setExpiration(new Date(System.currentTimeMillis() + expirationMillis))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
-
-
 }

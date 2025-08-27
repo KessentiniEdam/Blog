@@ -5,5 +5,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor     // Génère un constructeur avec tous les arguments
 public class AuthResponse {
-    private String token;
+    private String refreshToken;
+    private String accessToken;
+
+
 }

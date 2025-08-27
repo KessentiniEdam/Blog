@@ -56,14 +56,15 @@ export class AuthComponent {
       this.authService.login(loginData).subscribe({
         next: (res) => {
           console.log('Login response:', res);
-          if (res && res.token) {
-            localStorage.setItem('jwtToken', res.token);
-            localStorage.removeItem('username');
+  if (res && res.accessToken && res.refreshToken) {
+    localStorage.setItem('accessToken', res.accessToken);
+    localStorage.setItem('refreshToken', res.refreshToken);          
+      localStorage.removeItem('username');
             localStorage.removeItem('password');
             this.router.navigate(['/articles']);
 
           } else {
-            alert('No token received');
+            alert('No tokens received');
           }
 
         },

@@ -5,10 +5,7 @@
       <input [(ngModel)]="Article.title" name="title" />
       <label>Body:</label>
       <textarea [(ngModel)]="Article.body" name="body"></textarea>
-      <label>User ID:</label>
-      <input [(ngModel)]="Article.userId" name="userId" />
-      <label>Date:</label>
-      <input type="date" [(ngModel)]="Article.addedDate" name="addedDate" />
+     
       <button (click)="save()">Save</button>
       <button (click)="cancel()">Cancel</button>
     </form>

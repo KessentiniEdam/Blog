@@ -1,4 +1,5 @@
 /* Container styling */
+
 form {
   background-color: #2B291D;
   color: #f0f0f0;
@@ -68,8 +69,16 @@ form button:hover,
 }
 
 /* Reverse text styling */
-p:first-of-type {
+p:first-of-type{
   font-style: italic;
   color: #aaa;
   margin-bottom: 20px;
 }
+
+
+.liked {
+  background-color: #28a745 !important; /* green */
+    font-weight: bold;
+
+}
+

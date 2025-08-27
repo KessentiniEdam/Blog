@@ -1,5 +1,5 @@
 <!-- app.component.html -->
-<ng-container *ngIf="isLoggedIn() && !isAuthRoute()">
+<ng-container *ngIf="!isAuthRoute()">
   <header class="navbar">
     
     <div class="left">
@@ -17,14 +17,13 @@
     </div>
   </header>
 </ng-container>
-
 <div style="height: 150px"></div>
 
 <main>
   <router-outlet></router-outlet>
 </main>
 
-<ng-container *ngIf="isLoggedIn() && !isAuthRoute()">
+<ng-container *ngIf="!isAuthRoute()">
   <footer class="app-footer">
     <div class="footer-text">Thank you for your contribution</div>
   </footer>

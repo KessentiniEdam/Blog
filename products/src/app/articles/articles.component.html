@@ -1,14 +1,57 @@
-<h1>List of Articles</h1>
-
-<div *ngFor="let Article of Articles; let i = index; trackBy: trackByTitle">
-  <div class="Article" appHideOnHover [ngStyle]="{ backgroundColor: '#786B4C' }">
-    <h3>{{ Article.title | titlecase }}</h3>
-    <p>Date: {{ Article.addedDate | date: 'shortDate' }}</p>
-    <p>Body: {{ Article.body }}</p>
-    <p>Author: {{ getUsername(Article.userId) }}</p>
-
-    <!-- Author-only actions -->
-    <button *ngIf="checkPrivileges(Article)" (click)="removeArticle(i)">Remove</button>
-    <button *ngIf="checkPrivileges(Article)" (click)="updateArticle(i)">Update</button>
+<div *ngIf="!Articles || Articles.length === 0; else articlesList">
+   <p>Please logout and login to refresh token and load data.</p> 
   </div>
 
+<ng-template #articlesList>
+  <h1>List of Articles</h1>
+  <div *ngFor="let Article of Articles; let i = index; trackBy: trackByTitle">
+    <div class="Article" appHideOnHover [ngStyle]="{ backgroundColor: '#786B4C' }">
+      <h3>{{ Article.title | titlecase }}</h3>
+      <p>Created: {{ Article.addedDate | date: 'dd-MM-yyyy' }}</p>
+      <p *ngIf="Article.modifiedDate!=null" style="font-style: italic; color: #aaa; margin-bottom: 20px;">
+        Modified: {{ Article.modifiedDate | date: 'dd-MM-yyyy' }}
+      </p>
+
+      <p>Author: {{ getUsername(Article.userId) }}</p>
+      <p>Body: {{ Article.body }}</p>
+
+      <!-- Likes -->
+      <div class="likes">
+        <button  (click)="toggleLike(Article)" [ngClass]="{'liked':isLiked(Article),'not-liked':!isLiked(Article)}" >👍 Like</button>
+        <span>{{ Article.likes?.length || 0 }} likes</span>
+        <ul *ngIf="Article.likes?.length">
+          <li *ngFor="let like of Article.likes">{{ like }}</li>
+        </ul>
+      </div>
+
+      <!-- Comments -->
+      <div class="comments">
+        <h4>Comments</h4>
+        <div *ngIf="!Article.comments?.length">
+          <p>No comments yet.</p>
+        </div>
+        <ul>
+          <li *ngFor="let comment of Article.comments; let j = index">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <span>
+                <strong>{{ getUsername(comment.userId) }}:</strong> {{ comment.body }}
+              </span>
+              <span *ngIf="checkCommentPrivileges(comment)" style="display: flex; gap: 8px;">
+                <img src="assets/edit.png" alt="Edit" style="width: 18px; height: 18px; cursor: pointer;" (click)="startEditComment(i, j)">
+                <img src="assets/delete.png" alt="Delete" style="width: 18px; height: 18px; cursor: pointer;" (click)="deleteComment(i,j)">
+              </span>
+            </div>
+          </li>
+        </ul>
+<input [(ngModel)]="commentInputs[Article.id!]" style="height: 30px;border-radius: 10px;" placeholder="Write a comment..." />
+<button *ngIf="editingArticleIndex === i && editingCommentIndex !== null"
+        (click)="updateComment(i, editingCommentIndex)">Update</button>
+<button *ngIf="editingArticleIndex !== i || editingCommentIndex === null"
+        (click)="addComment(Article, commentInputs[Article.id!])">Add Comment</button>      </div>
+
+      <!-- Author-only actions -->
+      <button *ngIf="checkPrivileges(Article)" (click)="removeArticle(i)">Remove</button>
+      <button *ngIf="checkPrivileges(Article)" (click)="updateArticle(i)">Update</button>
+    </div>
+  </div>
+</ng-template>

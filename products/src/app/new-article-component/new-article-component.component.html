@@ -9,4 +9,7 @@
     <input type="hidden" [(ngModel)]="newArticle.userId" name="ArticleUserId">
   </div>
   <button (click)="addArticle()">Add Article</button>
+  <div *ngIf="errorMessage" class="error-message" style="color: red; margin-top: 10px;">
+  {{ errorMessage }}
+</div>
 </form>

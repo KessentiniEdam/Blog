@@ -26,6 +26,7 @@ export class EditArticleComponent implements OnInit {
     this.index = +this.route.snapshot.paramMap.get('id')!;
     this.ArticleService.getArticle(this.index).subscribe(Article => {
       this.Article = Article;
+      console.log("article loaded: ",this.Article);
     });
   }
 
@@ -33,6 +34,7 @@ export class EditArticleComponent implements OnInit {
     this.ArticleService.updateArticle(this.index, this.Article).subscribe(() => {
       alert('Article updated!');
       this.router.navigate(['/']);
+
     });
   }
 

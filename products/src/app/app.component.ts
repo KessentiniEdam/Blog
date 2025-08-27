@@ -20,9 +20,7 @@ export class AppComponent {
   getUsername(): string  {
 return this.authService.getUsername();  
 }
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('jwtToken');
-  }
+
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);

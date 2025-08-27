@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "http://localhost:4200")  // adjust as needed
+@CrossOrigin(origins = "*") // Allow requests from Angular
 public class UserController {
 
     private final UserRepository userRepository;
